@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}{{ t('toolkit_title') }} · {{ t('app_name') }}{% endblock %}
+{% block content %}
+<h1>{{ t('toolkit_title') }}</h1>
+<p class="lede">{{ t('toolkit_intro') }}</p>
+<ul class="cards">
+{% for p in pages %}
+  <li class="card"><a href="/toolkit/{{ p.slug }}"><strong>{{ p.title }}</strong></a>{% if p.fallback %} <span class="muted small">(English)</span>{% endif %}</li>
+{% endfor %}
+  <li class="card"><a href="/toolkit/referrals"><strong>{{ t('referrals_title') }}</strong></a></li>
+  <li class="card"><a href="/guidelines"><strong>{{ t('guidelines_title') }}</strong></a></li>
+</ul>
+{% if account and account.is_facilitator %}
+<h2>{{ t('helper_title') }}</h2>
+<p><a class="btn primary" href="/toolkit/helper">{{ t('helper_title') }}</a> <a class="btn" href="/toolkit/drafts">{{ t('draft_topic') }}</a></p>
+{% endif %}
+<p class="small muted" id="offline-note" hidden>Saved for offline use.</p>
+{% endblock %}

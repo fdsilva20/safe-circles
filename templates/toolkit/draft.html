@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="crumbs"><a href="/toolkit/drafts">{{ t('draft_topic') }}</a> › {{ draft.title }}</nav>
+<p><span class="pill">{{ draft.status }}</span> <span class="pill soft">{{ lang_names.get(draft.lang, draft.lang) }}</span></p>
+<article class="prose card">{{ html | safe }}</article>
+<p class="small muted">AI draft from the theme: “{{ draft.prompt }}”. {% if draft.status != 'approved' %}Not yet reviewed by Red Dot Foundation.{% endif %}</p>
+{% endblock %}

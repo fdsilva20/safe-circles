@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}{{ t('guidelines_title') }} · {{ t('app_name') }}{% endblock %}
+{% block content %}
+<article class="prose">
+{% if page %}{% if page.fallback %}<p class="small muted">Shown in English; translation pending.</p>{% endif %}{{ page.html | safe }}{% else %}<h1>{{ t('guidelines_title') }}</h1>{% endif %}
+</article>
+{% endblock %}

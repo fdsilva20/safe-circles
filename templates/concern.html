@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t('concern_title') }}</h1>
+{% if sent %}<p class="ok">{{ t('concern_sent') }}</p>
+{% else %}
+<p class="lede">{{ t('concern_intro') }}</p>
+<p class="emergency">{{ t('emergency') }}</p>
+<form method="post" action="/concern" class="form">
+  {% if circle %}<p class="muted">{{ circle.name }} · {{ circle.city }}</p><input type="hidden" name="circle_id" value="{{ circle.id }}">{% endif %}
+  <label>{{ t('concern_text') }}<textarea name="text" rows="6" required maxlength="5000"></textarea></label>
+  <button class="btn primary">{{ t('submit') }}</button>
+</form>
+{% endif %}
+{% endblock %}

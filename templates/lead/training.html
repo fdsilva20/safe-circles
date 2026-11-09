@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t('training_title') }}</h1>
+<p class="lede">{{ t('training_intro') }}</p>
+{% for m in modules %}
+<details class="module" {% if loop.first %}open{% endif %}>
+  <summary>{{ loop.index }}. {{ m.title }}{% if m.fallback %} <span class="muted small">(English)</span>{% endif %}</summary>
+  <div class="prose">{{ m.html | safe }}</div>
+</details>
+{% endfor %}
+{% if application.training_completed_at %}
+<p class="ok">{{ t('training_complete') }}</p>
+{% else %}
+<form method="post" action="/lead/training/complete" class="form">
+  <label class="check"><input type="checkbox" name="confirm" required> {{ t('training_done') }}</label>
+  <button class="btn primary">{{ t('submit') }}</button>
+</form>
+{% endif %}
+{% endblock %}

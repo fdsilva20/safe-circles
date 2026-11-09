@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t('me_title') }}</h1>
+<p class="muted">{{ account.display_name }} · {{ account.email }}{% if account.is_facilitator %} · <a href="/lead/dashboard">{{ t('dashboard_title') }}</a>{% endif %}</p>
+<h2>{{ t('me_registrations') }}</h2>
+{% if not upcoming and not past %}<p class="empty">{{ t('me_none') }} <a href="/find">{{ t('nav_find') }}</a></p>{% endif %}
+<ul class="cards">
+{% for r in upcoming %}
+  <li class="card">
+    <div class="card-head"><a href="/circles/{{ r.session.circle.slug }}"><strong>{{ r.session.circle.name }}</strong></a><span class="pill">{{ t('upcoming') }}</span></div>
+    <p><time>{{ r.session.starts_at.strftime('%A %d %B %Y, %H:%M') }}</time> · {{ r.session.circle.city }}</p>
+    <div class="row"><a class="btn small" href="/sessions/{{ r.session.id }}/confirmed">{{ t('venue') }}</a>
+      <form method="post" action="/sessions/{{ r.session.id }}/cancel"><button class="btn small danger">{{ t('cancel_registration') }}</button></form></div>
+  </li>
+{% endfor %}
+{% for r in past %}
+  <li class="card muted-card">
+    <div class="card-head"><strong>{{ r.session.circle.name }}</strong></div>
+    <p><time>{{ r.session.starts_at.strftime('%a %d %b %Y, %H:%M') }}</time></p>
+    {% if r.session.id not in feedback_given %}<a class="btn small primary" href="/sessions/{{ r.session.id }}/feedback">{{ t('feedback_title') }}</a>{% else %}<span class="small muted">{{ t('feedback_thanks') }}</span>{% endif %}
+  </li>
+{% endfor %}
+</ul>
+{% endblock %}

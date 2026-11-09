@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ t('lead_title') }} · {{ t('app_name') }}{% endblock %}
+{% block content %}
+<h1>{{ t('lead_title') }}</h1>
+<p class="lede">{{ t('lead_intro') }}</p>
+<ol class="steps">
+  <li><strong>{{ t('apply') }}</strong></li>
+  <li><strong>{{ t('training_title') }}</strong></li>
+  <li><strong>{{ t('status_approved') }}</strong> — Red Dot Foundation</li>
+  <li><strong>{{ t('new_circle') }}</strong> · {{ t('new_session') }} · {{ t('toolkit_title') }}</li>
+</ol>
+{% if account and account.is_facilitator %}
+  <p><a class="btn primary" href="/lead/dashboard">{{ t('dashboard_title') }}</a> <a class="btn" href="/toolkit">{{ t('toolkit_title') }}</a></p>
+{% elif application %}
+  <div class="card">
+    <p><strong>{{ t('apply') }}:</strong>
+    {% if application.status == 'declined' %}{{ t('status_declined') }}
+    {% elif application.status == 'approved' %}{{ t('status_approved') }}
+    {% elif application.training_completed_at %}{{ t('status_training_done') }}
+    {% else %}{{ t('status_submitted') }} — <a class="btn small primary" href="/lead/training">{{ t('training_title') }}</a>{% endif %}</p>
+    {% if application.review_note %}<p class="muted small">{{ application.review_note }}</p>{% endif %}
+  </div>
+{% else %}
+  <p><a class="btn primary" href="/lead/apply">{{ t('apply') }}</a></p>
+{% endif %}
+{% endblock %}

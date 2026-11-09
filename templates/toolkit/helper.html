@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="crumbs"><a href="/toolkit">{{ t('toolkit_title') }}</a> › {{ t('helper_title') }}</nav>
+<h1>{{ t('helper_title') }}</h1>
+<p class="lede">{{ t('helper_intro') }}</p>
+<p class="emergency">{{ t('emergency') }}</p>
+{% if not ai_available %}<p class="muted small">{{ t('helper_offline') }}</p>{% endif %}
+<form method="post" action="/toolkit/helper" class="form">
+  <label>{{ t('helper_ask') }}<textarea name="question" rows="4" required maxlength="2000" placeholder="A participant started crying and the group went quiet. What do I do?">{{ question or '' }}</textarea></label>
+  <button class="btn primary">{{ t('helper_ask') }}</button>
+</form>
+{% if answer %}
+<article class="card prose answer">{{ answer | replace('\n', '<br>') | safe }}</article>
+<p class="small muted">AI-generated guidance for facilitators. It is not clinical advice; the safeguarding protocol takes precedence.</p>
+{% elif fallback %}
+<article class="prose card">{{ fallback.protocol.html | safe }}</article>
+<h2>{{ t('referrals_title') }}{% if fallback.refs.city %} · {{ fallback.refs.city }}{% endif %}</h2>
+<ul>{% for r in fallback.refs.local %}<li><strong>{{ r.name }}</strong> {{ r.phone }} — {{ r.what }}</li>{% endfor %}{% for r in fallback.refs.national %}<li><strong>{{ r.name }}</strong> {{ r.phone }} — {{ r.what }}</li>{% endfor %}</ul>
+{% endif %}
+{% endblock %}

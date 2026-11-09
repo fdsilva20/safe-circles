@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ t('app_name') }}{% endblock %}</title>
+<meta name="description" content="{{ t('tagline') }}">
+<meta name="theme-color" content="#faf7fe">
+<link rel="manifest" href="/static/manifest.webmanifest">
+<link rel="icon" href="/static/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/static/icons/icon-192.png">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="/"><span class="brand-name">Safe Circles</span><span class="dot" aria-hidden="true"></span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/find" {% if request.url.path.startswith('/find') %}aria-current="page"{% endif %}>{{ t('nav_find') }}</a>
+      <a href="/lead" {% if request.url.path.startswith('/lead') %}aria-current="page"{% endif %}>{{ t('nav_lead') }}</a>
+      <a href="/toolkit" {% if request.url.path.startswith('/toolkit') %}aria-current="page"{% endif %}>{{ t('nav_toolkit') }}</a>
+      <a href="/data" {% if request.url.path.startswith('/data') %}aria-current="page"{% endif %}>{{ t('nav_data') }}</a>
+      {% if account %}
+        <a href="/me">{{ t('nav_me') }}</a>
+        {% if account.is_admin %}<a href="/admin">{{ t('nav_admin') }}</a>{% endif %}
+      {% else %}
+        <a href="/login">{{ t('nav_login') }}</a>
+      {% endif %}
+    </nav>
+    <div class="lang" aria-label="Language">
+      {% for code in languages %}<a href="?lang={{ code }}" {% if code == lang %}aria-current="true"{% endif %}>{{ lang_names[code] }}</a>{% endfor %}
+    </div>
+  </div>
+  {% if app_env != 'prod' %}<div class="envbar">Prototype · {{ app_env }} · demo data</div>{% endif %}
+</header>
+<main id="main" class="wrap">
+  {% block content %}{% endblock %}
+</main>
+<footer class="footer">
+  <div class="wrap">
+    <p class="muted small">{{ t('adults_only') }} {{ t('footer_privacy') }}</p>
+    <p class="muted small">{{ t('footer_open_source') }} · <a href="/about">{{ t('about_title') }}</a> · <a href="/guidelines">{{ t('guidelines_title') }}</a> · <a href="/concern">{{ t('concern_title') }}</a> · <a href="/data.json">data.json</a>
+    {% if account %} · <form method="post" action="/logout" class="inline"><button class="linklike">{{ t('nav_logout') }}</button></form>{% endif %}</p>
+    <p class="small emergency">{{ t('emergency') }}</p>
+  </div>
+</footer>
+<script src="/static/app.js" defer></script>
+</body>
+</html>

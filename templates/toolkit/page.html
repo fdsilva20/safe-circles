@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}{{ page.title }} · {{ t('app_name') }}{% endblock %}
+{% block content %}
+<nav class="crumbs"><a href="/toolkit">{{ t('toolkit_title') }}</a> › {{ page.title }}</nav>
+{% if page.fallback %}<p class="small muted">Shown in English; translation pending review.</p>{% endif %}
+<article class="prose">{{ page.html | safe }}</article>
+{% endblock %}

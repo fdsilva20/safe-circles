@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t('new_session') }}</h1>
+<p class="muted">{{ circle.name }} · {{ circle.city }}</p>
+{% if error %}<p class="error">Please enter a valid date and time.</p>{% endif %}
+<form method="post" action="/lead/circles/{{ circle.id }}/sessions/new" class="form">
+  <label>{{ t('starts_at') }}<input type="datetime-local" name="starts_at" required></label>
+  <label>{{ t('duration') }}<input type="number" name="duration_min" min="30" max="240" value="90"></label>
+  <label>{{ t('topic') }}<select name="topic_slug"><option value="">—</option>{% for slug, title in topics %}<option value="{{ slug }}">{{ title }}</option>{% endfor %}</select></label>
+  {% if circle.format != 'in_person' %}<label>{{ t('online_link') }}<input name="online_link_private" maxlength="300" placeholder="https://"></label>{% endif %}
+  <button class="btn primary">{{ t('save') }}</button>
+</form>
+{% endblock %}

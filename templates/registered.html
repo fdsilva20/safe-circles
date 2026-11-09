@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t('register_confirm_title') }}</h1>
+<p class="lede">{{ t('register_confirm_body') }}</p>
+<div class="card">
+  <p><strong>{{ circle.name }}</strong><br><time datetime="{{ session.starts_at.isoformat() }}">{{ session.starts_at.strftime('%A %d %B %Y, %H:%M') }}</time> · {{ session.duration_min }} min</p>
+  {% if circle.format != 'online' %}<p><strong>{{ t('venue') }}:</strong> {{ circle.venue_private or circle.area }}</p>{% endif %}
+  {% if circle.format != 'in_person' and session.online_link_private %}<p><strong>{{ t('online_link') }}:</strong> <a href="{{ session.online_link_private }}">{{ session.online_link_private }}</a></p>{% endif %}
+</div>
+<h2>{{ t('guidelines_title') }}</h2>
+<p>{{ t('guidelines_intro') }} <a class="btn small" href="/guidelines">{{ t('guidelines_title') }}</a></p>
+<p><a href="/me">{{ t('nav_me') }}</a></p>
+{% endblock %}

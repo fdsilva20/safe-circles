@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t('dashboard_title') }}</h1>
+<p><a class="btn primary" href="/lead/circles/new">{{ t('new_circle') }}</a> <a class="btn" href="/toolkit">{{ t('toolkit_title') }}</a> <a class="btn" href="/toolkit/helper">{{ t('helper_title') }}</a></p>
+{% if not circles %}<p class="empty">—</p>{% endif %}
+{% for c in circles %}
+<section class="card">
+  <div class="card-head"><a href="/circles/{{ c.slug }}"><strong>{{ c.name }}</strong></a><span class="pill">{{ c.city }}</span></div>
+  <p class="muted small">{{ t('area') }}: {{ c.area or '—' }} · {{ t('venue_private') }}: {{ c.venue_private or '—' }}</p>
+  <p><a class="btn small" href="/lead/circles/{{ c.id }}/sessions/new">{{ t('new_session') }}</a></p>
+  {% if c.to_record %}
+  <h3>{{ t('attendance') }}</h3>
+  <p class="small muted">{{ t('attendance_help') }}</p>
+  {% for s in c.to_record %}
+  <form method="post" action="/lead/sessions/{{ s.id }}/attendance" class="row">
+    <span><time>{{ s.starts_at.strftime('%a %d %b, %H:%M') }}</time> · {{ s.confirmed_count }} {{ t('registered') }}</span>
+    <input type="number" name="attendance_count" min="0" max="200" value="{{ s.confirmed_count }}" aria-label="{{ t('attendance') }}">
+    <button class="btn small primary">{{ t('mark_held') }}</button>
+  </form>
+  {% endfor %}
+  {% endif %}
+  <h3>{{ t('upcoming') }}</h3>
+  {% if not c.upcoming %}<p class="muted small">—</p>{% endif %}
+  <ul class="sessions">
+  {% for s in c.upcoming %}
+    <li class="row"><span><time>{{ s.starts_at.strftime('%a %d %b, %H:%M') }}</time> · {{ s.confirmed_count }}/{{ s.effective_capacity }} {{ t('registered') }}{% if s.topic_slug %} · {{ s.topic_slug.replace('-', ' ') }}{% endif %}</span>
+      <form method="post" action="/lead/sessions/{{ s.id }}/cancel"><button class="btn small danger">{{ t('close') }}</button></form></li>
+  {% endfor %}
+  </ul>
+  {% if c.held %}<p class="small muted">{{ t('data_sessions') }}: {{ c.held | length }} · {{ t('data_attendance') }}: {{ c.held | sum(attribute='attendance_count') }}</p>{% endif %}
+</section>
+{% endfor %}
+{% endblock %}

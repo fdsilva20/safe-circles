@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="crumbs"><a href="/toolkit">{{ t('toolkit_title') }}</a> › {{ t('draft_topic') }}</nav>
+<h1>{{ t('draft_topic') }}</h1>
+<p class="lede">{{ t('draft_intro') }}</p>
+{% if request.query_params.get('sent') %}<p class="ok">{{ t('draft_submitted') }}</p>{% endif %}
+{% if request.query_params.get('failed') %}<p class="error">{{ t('helper_offline') }}</p>{% endif %}
+<form method="post" action="/toolkit/drafts" class="form">
+  <label>{{ t('topic') }}<input name="theme" required maxlength="500" placeholder="Saying no to family pressure without losing the relationship"></label>
+  <button class="btn primary" {% if not ai_available %}disabled{% endif %}>{{ t('submit') }}</button>
+</form>
+<h2>Approved topics</h2>
+{% if not approved %}<p class="empty">—</p>{% endif %}
+<ul class="cards">{% for d in approved %}<li class="card"><a href="/toolkit/drafts/{{ d.id }}"><strong>{{ d.title }}</strong></a> <span class="pill soft">{{ lang_names.get(d.lang, d.lang) }}</span></li>{% endfor %}</ul>
+<h2>My drafts</h2>
+{% if not mine %}<p class="empty">—</p>{% endif %}
+<ul class="cards">{% for d in mine %}<li class="card"><a href="/toolkit/drafts/{{ d.id }}"><strong>{{ d.title }}</strong></a> <span class="pill">{{ d.status }}</span></li>{% endfor %}</ul>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t('login_title') }}</h1>
+<p class="lede">{{ t('login_intro') }}</p>
+{% if expired %}<p class="error">This link has expired or was already used. Request a new one.</p>{% endif %}
+{% if error %}<p class="error">Please enter a valid email address.</p>{% endif %}
+<form method="post" action="/login" class="form narrow">
+  <label>{{ t('email') }}<input type="email" name="email" required autocomplete="email" inputmode="email"></label>
+  <input type="hidden" name="next" value="{{ next_url or '/' }}">
+  <button class="btn primary">{{ t('send_link') }}</button>
+</form>
+<p class="small muted">{{ t('adults_only') }}</p>
+{% endblock %}

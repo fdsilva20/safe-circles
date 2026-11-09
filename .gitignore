@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+*.db
+.env
+.pytest_cache/
+
+# Not part of the open-source codebase: the project knowledge base, grant
+# drafts and local tooling config live alongside the code but stay private.
+wiki/
+*.docx
+.claude/

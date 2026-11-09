@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="prose">
+<h1>{{ t('about_title') }}</h1>
+<p>Safe Circles is a decentralised, community-led peer-support model: confidential, non-judgemental listening circles for mental wellbeing, gender equality and violence prevention, run by trained community volunteers. It grew out of Red Dot Foundation's in-person circles in Satara, Pune and Mumbai.</p>
+<p>This platform helps people <a href="/find">find a circle</a>, attend one, or <a href="/lead">train to lead one</a>, and gives facilitators a <a href="/toolkit">toolkit</a>: weekly topics, icebreakers, arts-based activities, listening guidelines, a safeguarding protocol and referral directories.</p>
+<h2>Who it is for</h2>
+<p>Adults aged 18 and above. Circles for adolescents are run offline in schools by trained adult facilitators using the same toolkit; no young person has an account here and no data about them is stored.</p>
+<h2>Privacy by design</h2>
+<ul>
+<li>You sign in with an email link. No password, no phone number, no legal name.</li>
+<li>Other participants see only the display name you choose.</li>
+<li>Exact venues are shared only with people who have registered.</li>
+<li>Nothing said inside a circle is ever recorded here. Facilitators record only how many people came.</li>
+<li>Feedback is anonymous by construction and shown only in aggregate above a minimum number of responses.</li>
+</ul>
+<h2>Where AI is used, and where it is not</h2>
+<p>AI supports facilitators only: it can draft weekly topics for Red Dot Foundation to review before they are published, and it can answer a facilitator's question about handling a situation, grounded in the safeguarding protocol and referral directory. It never speaks to participants and never sees anything said in a circle.</p>
+<h2>Open source and open data</h2>
+<p>The code is open source under the Apache 2.0 licence so other communities and organisations can run their own network. Live anonymised figures are published on the <a href="/data">open data</a> page and at <code>/data.json</code>.</p>
+<p class="muted small">A Murmur AI and Red Dot Foundation project.</p>
+</article>
+{% endblock %}

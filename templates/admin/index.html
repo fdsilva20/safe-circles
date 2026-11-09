@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t('admin_title') }}</h1>
+<h2>{{ t('admin_applications') }}</h2>
+{% if not applications %}<p class="empty">—</p>{% endif %}
+{% for a in applications %}
+<section class="card">
+  <div class="card-head"><strong>{{ a.account.display_name or a.account.email }}</strong><span class="pill">{{ a.status }}{% if a.status == 'submitted' and a.training_completed_at %} · trained{% endif %}</span></div>
+  <p class="muted small">{{ a.city }} · {{ a.languages }} · {{ a.created_at.strftime('%d %b %Y') }}{% if a.reference_contact %} · ref: {{ a.reference_contact }}{% endif %}</p>
+  <details><summary>{{ t('apply_motivation') }}</summary><p>{{ a.motivation }}</p>{% if a.experience %}<p class="muted">{{ a.experience }}</p>{% endif %}</details>
+  {% if a.status == 'submitted' %}
+  <form method="post" action="/admin/applications/{{ a.id }}/decide" class="row">
+    <input name="note" placeholder="note to applicant (optional)" maxlength="1000">
+    <button class="btn small primary" name="decision" value="approve" {% if not a.training_completed_at %}disabled title="Training not completed"{% endif %}>{{ t('approve') }}</button>
+    <button class="btn small danger" name="decision" value="decline">{{ t('decline') }}</button>
+  </form>
+  {% endif %}
+</section>
+{% endfor %}
+
+<h2>{{ t('admin_drafts') }}</h2>
+{% if not drafts %}<p class="empty">—</p>{% endif %}
+{% for d in drafts %}
+<section class="card">
+  <div class="card-head"><a href="/toolkit/drafts/{{ d.id }}"><strong>{{ d.title }}</strong></a><span class="pill soft">{{ lang_names.get(d.lang, d.lang) }}</span></div>
+  <form method="post" action="/admin/drafts/{{ d.id }}/decide" class="row">
+    <button class="btn small primary" name="decision" value="approve">{{ t('approve') }}</button>
+    <button class="btn small danger" name="decision" value="reject">{{ t('reject') }}</button>
+  </form>
+</section>
+{% endfor %}
+
+<h2>{{ t('admin_concerns') }}</h2>
+{% if not concerns %}<p class="empty">—</p>{% endif %}
+{% for c in concerns %}
+<section class="card">
+  <p class="muted small">{{ c.created_at.strftime('%d %b %Y, %H:%M') }}{% if c.circle_id %} · circle #{{ c.circle_id }}{% endif %}{% if not c.reporter_account_id %} · anonymous{% endif %}</p>
+  <p>{{ c.text }}</p>
+  <form method="post" action="/admin/concerns/{{ c.id }}/close"><button class="btn small">{{ t('close') }}</button></form>
+</section>
+{% endfor %}
+{% endblock %}

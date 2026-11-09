@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ circle.name }} · {{ t('app_name') }}{% endblock %}
+{% block content %}
+<nav class="crumbs"><a href="/find">{{ t('nav_find') }}</a> › {{ circle.name }}</nav>
+<h1>{{ circle.name }}</h1>
+<p class="muted">{{ circle.city }}{% if circle.area %} · {{ circle.area }}{% endif %} · {{ t('format_' + circle.format) }} · {{ t('age_' + circle.age_band) }} · {% for l in circle.language_list %}{{ lang_names.get(l, l) }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+{% if circle.description %}<p>{{ circle.description }}</p>{% endif %}
+<p class="small muted">{{ t('find_intro') }}</p>
+
+<h2>{{ t('upcoming') }}</h2>
+{% if not upcoming %}<p class="empty">—</p>{% endif %}
+<ul class="cards">
+{% for s in upcoming %}
+  <li class="card session-card">
+    <div><strong><time datetime="{{ s.starts_at.isoformat() }}">{{ s.starts_at.strftime('%A %d %B %Y, %H:%M') }}</time></strong> · {{ s.duration_min }} min
+      {% if s.topic_slug %}<span class="pill soft">{{ s.topic_slug.replace('-', ' ') }}</span>{% endif %}</div>
+    <div class="row">
+      <span>{% if s.spaces_left > 0 %}{{ s.spaces_left }} {{ t('spaces_left') }}{% else %}{{ t('full') }}{% endif %}</span>
+      {% if s.id in my_session_ids %}
+        <a class="btn small" href="/sessions/{{ s.id }}/confirmed">{{ t('register_confirm_title') }}</a>
+      {% elif s.spaces_left > 0 %}
+        <form method="post" action="/sessions/{{ s.id }}/register"><button class="btn primary small">{{ t('register') }}</button></form>
+      {% endif %}
+    </div>
+    {% if full_session == s.id %}<p class="error">{{ t('full') }}</p>{% endif %}
+  </li>
+{% endfor %}
+</ul>
+<p class="small"><a href="/guidelines">{{ t('guidelines_title') }}</a> · <a href="/concern?circle={{ circle.id }}">{{ t('concern_title') }}</a></p>
+{% endblock %}

@@ -1,0 +1,24 @@
+{
+  "national": [
+    {"name": "Emergency services", "phone": "112", "what": "Police, fire, ambulance. Any immediate danger."},
+    {"name": "Tele-MANAS", "phone": "14416", "what": "Government mental health helpline, 24x7, free, multiple languages.", "url": "https://telemanas.mohfw.gov.in"},
+    {"name": "Women's helpline", "phone": "181", "what": "Government helpline for women facing violence; connects to One Stop Centres."},
+    {"name": "iCall (TISS)", "phone": "9152987821", "what": "Psychosocial counselling by phone and email, Mon–Sat 10am–8pm.", "url": "https://icallhelpline.org"},
+    {"name": "Vandrevala Foundation", "phone": "9999666555", "what": "Mental health helpline, 24x7, phone and WhatsApp.", "url": "https://www.vandrevalafoundation.com"},
+    {"name": "Safecity", "phone": "", "what": "Anonymous reporting of sexual harassment in public spaces.", "url": "https://safecity.in"}
+  ],
+  "cities": {
+    "Mumbai": [
+      {"name": "One Stop Centre (Sakhi), Mumbai", "phone": "181", "what": "Integrated support for women facing violence: medical, legal, shelter. Verify current address before referring."},
+      {"name": "Red Dot Foundation Mumbai", "phone": "", "what": "Facilitator support and safeguarding lead. Contact given at training.", "url": "https://reddotfoundation.org"}
+    ],
+    "Pune": [
+      {"name": "One Stop Centre, Pune", "phone": "181", "what": "Integrated support for women facing violence. Verify current address before referring."},
+      {"name": "Connecting Trust, Pune", "phone": "9922001122", "what": "Distress helpline, 12pm–8pm. Verify hours before referring.", "url": "https://connectingngo.org"}
+    ],
+    "Satara": [
+      {"name": "One Stop Centre, Satara", "phone": "181", "what": "Integrated support for women facing violence. Verify current address before referring."},
+      {"name": "District Hospital, Satara — mental health OPD", "phone": "", "what": "Government psychiatric outpatient service. Verify days and timings before referring."}
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t('apply') }}</h1>
+<form method="post" action="/lead/apply" class="form">
+  <label>{{ t('apply_city') }}<input name="city" required maxlength="80" list="cities"></label>
+  <datalist id="cities"><option>Mumbai</option><option>Pune</option><option>Satara</option></datalist>
+  <fieldset><legend>{{ t('apply_langs') }}</legend>
+    {% for code in languages %}<label class="check"><input type="checkbox" name="languages" value="{{ code }}" {% if code == lang %}checked{% endif %}> {{ lang_names[code] }}</label>{% endfor %}</fieldset>
+  <label>{{ t('apply_motivation') }}<textarea name="motivation" rows="5" required maxlength="3000"></textarea></label>
+  <label>{{ t('apply_experience') }}<textarea name="experience" rows="4" maxlength="3000"></textarea></label>
+  <label>{{ t('apply_reference') }}<input name="reference_contact" maxlength="200"></label>
+  <button class="btn primary">{{ t('submit') }}</button>
+</form>
+{% endblock %}

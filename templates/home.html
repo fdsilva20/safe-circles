@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>{{ t('tagline') }}</h1>
+  <p class="lede">{{ t('adults_only') }}</p>
+  <div class="cta-row">
+    <a class="btn primary" href="/find">{{ t('nav_find') }}</a>
+    <a class="btn" href="/lead">{{ t('nav_lead') }}</a>
+  </div>
+</section>
+
+<section class="pillars">
+  <a class="pillar" href="/find"><h2>{{ t('nav_find') }}</h2><p>{{ t('find_intro') }}</p></a>
+  <a class="pillar" href="/guidelines"><h2>{{ t('guidelines_title') }}</h2><p>{{ t('guidelines_intro') }}</p></a>
+  <a class="pillar" href="/lead"><h2>{{ t('nav_lead') }}</h2><p>{{ t('lead_intro') }}</p></a>
+  <a class="pillar" href="/toolkit"><h2>{{ t('toolkit_title') }}</h2><p>{{ t('toolkit_intro') }}</p></a>
+</section>
+
+{% if upcoming %}
+<section>
+  <h2>{{ t('upcoming') }}</h2>
+  <ul class="cards">
+  {% for s in upcoming %}
+    <li class="card">
+      <div class="card-head"><a href="/circles/{{ s.circle.slug }}"><strong>{{ s.circle.name }}</strong></a>
+        <span class="pill">{{ t('format_' + s.circle.format) }}</span></div>
+      <p class="muted">{{ s.circle.city }}{% if s.circle.area %} · {{ s.circle.area }}{% endif %} · {% for l in s.circle.language_list %}{{ lang_names.get(l, l) }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+      <p><time datetime="{{ s.starts_at.isoformat() }}">{{ s.starts_at.strftime('%a %d %b, %H:%M') }}</time> · {% if s.spaces_left > 0 %}{{ s.spaces_left }} {{ t('spaces_left') }}{% else %}{{ t('full') }}{% endif %}</p>
+    </li>
+  {% endfor %}
+  </ul>
+</section>
+{% endif %}
+{% endblock %}

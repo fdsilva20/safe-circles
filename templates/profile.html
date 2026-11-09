@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t('display_name') }}</h1>
+{% if error %}<p class="error">A display name and the age confirmation are both required.</p>{% endif %}
+<form method="post" action="/profile" class="form narrow">
+  <label>{{ t('display_name') }}<input type="text" name="display_name" maxlength="60" required value="{{ account.display_name }}"><span class="help">{{ t('display_name_help') }}</span></label>
+  <label class="check"><input type="checkbox" name="age_attest" {% if account.age_attested %}checked{% endif %} required> {{ t('age_attest') }}</label>
+  <input type="hidden" name="next" value="{{ next_url }}">
+  <button class="btn primary">{{ t('save') }}</button>
+</form>
+{% endblock %}

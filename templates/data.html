@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ t('data_title') }} · {{ t('app_name') }}{% endblock %}
+{% block content %}
+<h1>{{ t('data_title') }}</h1>
+<p class="lede">{{ t('data_intro') }}</p>
+<div class="stats">
+  <div class="stat"><span class="num">{{ m.active_circles }}</span><span class="lbl">{{ t('data_circles') }}</span></div>
+  <div class="stat"><span class="num">{{ m.sessions_held }}</span><span class="lbl">{{ t('data_sessions') }}</span></div>
+  <div class="stat"><span class="num">{{ m.total_attendance }}</span><span class="lbl">{{ t('data_attendance') }}</span></div>
+  <div class="stat"><span class="num">{{ m.facilitators_trained }}</span><span class="lbl">{{ t('data_facilitators') }}</span></div>
+</div>
+<h2>{{ t('data_cities') }}</h2>
+<table class="table">
+<thead><tr><th>{{ t('filter_city') }}</th><th>{{ t('data_circles') }}</th></tr></thead>
+<tbody>{% for row in m.by_city %}<tr><td>{{ row.city }}</td><td>{% if row.circles is none %}&lt;{{ m.thresholds.open_data_min_count }}{% else %}{{ row.circles }}{% endif %}</td></tr>{% endfor %}</tbody>
+</table>
+<h2>{{ t('data_feedback') }}</h2>
+<p class="small muted">{{ t('data_feedback_note') }} (≥ {{ m.thresholds.feedback_min_responses }})</p>
+{% if m.feedback %}
+<table class="table">
+<tbody>
+<tr><td>{{ t('felt_safe') }}</td><td>{{ m.feedback.felt_safe }} / 5</td></tr>
+<tr><td>{{ t('felt_heard') }}</td><td>{{ m.feedback.felt_heard }} / 5</td></tr>
+<tr><td>{{ t('would_return') }}</td><td>{{ m.feedback.would_return_pct }}%</td></tr>
+<tr><td class="muted">responses · circles reporting</td><td class="muted">{{ m.feedback.responses }} · {{ m.feedback.circles_reporting }}</td></tr>
+</tbody></table>
+{% else %}<p class="empty">—</p>{% endif %}
+<p class="small"><a href="/data.json">data.json</a></p>
+{% endblock %}

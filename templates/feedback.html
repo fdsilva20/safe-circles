@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t('feedback_title') }}</h1>
+<p class="muted">{{ circle.name }} · {{ session.starts_at.strftime('%a %d %b %Y') }}</p>
+{% if done %}<p class="ok">{{ t('feedback_thanks') }}</p><p><a href="/me">{{ t('nav_me') }}</a></p>
+{% elif already %}<p class="ok">{{ t('feedback_thanks') }}</p><p><a href="/me">{{ t('nav_me') }}</a></p>
+{% else %}
+<p class="lede">{{ t('feedback_intro') }}</p>
+<form method="post" class="form">
+  <fieldset><legend>{{ t('felt_safe') }}</legend><div class="scale">{% for i in range(1,6) %}<label><input type="radio" name="felt_safe" value="{{ i }}" {% if i == 4 %}checked{% endif %}>{{ i }}</label>{% endfor %}</div></fieldset>
+  <fieldset><legend>{{ t('felt_heard') }}</legend><div class="scale">{% for i in range(1,6) %}<label><input type="radio" name="felt_heard" value="{{ i }}" {% if i == 4 %}checked{% endif %}>{{ i }}</label>{% endfor %}</div></fieldset>
+  <label class="check"><input type="checkbox" name="would_return" checked> {{ t('would_return') }}</label>
+  <label>{{ t('comment') }}<textarea name="comment" rows="4" maxlength="2000"></textarea></label>
+  <button class="btn primary">{{ t('submit') }}</button>
+</form>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t('new_circle') }}</h1>
+<form method="post" action="/lead/circles/new" class="form">
+  <label>{{ t('circle_name') }}<input name="name" required maxlength="120"></label>
+  <label>{{ t('filter_city') }}<input name="city" required maxlength="80" list="cities"></label>
+  <datalist id="cities"><option>Mumbai</option><option>Pune</option><option>Satara</option></datalist>
+  <label>{{ t('area') }}<input name="area" maxlength="120" placeholder="e.g. Dadar West"></label>
+  <label>{{ t('venue_private') }}<textarea name="venue_private" rows="2" maxlength="1000"></textarea></label>
+  <fieldset><legend>{{ t('filter_lang') }}</legend>{% for code in languages %}<label class="check"><input type="checkbox" name="languages" value="{{ code }}" {% if code == lang %}checked{% endif %}> {{ lang_names[code] }}</label>{% endfor %}</fieldset>
+  <label>{{ t('filter_format') }}<select name="format"><option value="in_person">{{ t('format_in_person') }}</option><option value="online">{{ t('format_online') }}</option><option value="hybrid">{{ t('format_hybrid') }}</option></select></label>
+  <label>{{ t('filter_age') }}<select name="age_band"><option value="all_adults">{{ t('age_all_adults') }}</option><option value="18_24">{{ t('age_18_24') }}</option><option value="25_40">{{ t('age_25_40') }}</option><option value="40_plus">{{ t('age_40_plus') }}</option></select></label>
+  <label>{{ t('capacity') }}<input type="number" name="capacity" min="2" max="50" value="10"></label>
+  <label>{{ t('description') }}<textarea name="description" rows="4" maxlength="3000"></textarea></label>
+  <button class="btn primary">{{ t('save') }}</button>
+</form>
+{% endblock %}
